@@ -23,7 +23,7 @@ iframe {
   height: 100%;
 }
 
-button {
+.btn {
   border-radius: 10px;
   /* background-color: mediumslateblue; */
   color: white;
@@ -38,13 +38,31 @@ button {
   left: 10px;
 }
 
-button:hover {
+.btn:hover {
   border: 2px solid #f3eb48; /* Green */
   margin: 4px;
+  cursor: pointer;
 }
 
-button:active {
+.btn:active {
   transform: translateY(4px);
+}
+
+.onButton, .offButton {
+    border-radius: 10px;
+    color: white;
+    border: 0px;
+    font-size: calc(6px + 2vmin);
+    padding: 5px 10px 5px 10px;
+    background: -webkit-linear-gradient(-45deg, #954ed6 0%, #009bee);
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 45px;
+}
+
+
+#updateButton {
+    margin-top: 50px;
 }
 
 table {
@@ -168,7 +186,8 @@ input[type="range"]:focus::-ms-fill-upper {
 }
 
 .slidecontainer {
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
 }
 
 .slider {

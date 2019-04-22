@@ -1,12 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-//import io from "socket.io-client";
-
-// const settingsJSON =
-//   '[{"settings":[{"chat":[{"domain":"https://www.letsrobot.tv/chat/",' +
-//   '"channel":"skeeter_mcbee"}],"socket":[{"server":"wss://letsrobot.tv",' +
-//   '"port":"8000"}]}]}]';
+import io from "socket.io-client";
 
 const settings = {
   chat: {
@@ -27,6 +22,7 @@ const settings = {
       value: "1.0"
     }
   },
+  // I don't think I actually need this section anymore.
   checkboxes: {
     table: {
       checked: "false"
@@ -39,19 +35,59 @@ const settings = {
     server: "wss://letsrobot.tv",
     port: "8000",
     robotName: "sixy",
-    robotID: "80459902",
+    robotID: "80459902"
   }
 };
 
-//const socket = io.connect(
-//settings.settings[0].socket[0].server + ":" + settings.settings[0].socket[0].port
-//);
+const socket = io.connect(settings.socket.server + ":" + settings.socket.port);
+
+function onMessageSendEvent(message) {
+  console.log("Got message", message);
+  socket.emit("chat_message", {
+    message: "[" + settings.socket.robotName + "] ." + message,
+    robot_name: settings.socket.robotName,
+    robot_id: settings.socket.robotID,
+    room: settings.chat.channel,
+    secret: "iknowyourelookingatthisthatsfine"
+  });
+}
+
+function onRebootRequest() {
+  console.log("Got reboot request");
+  if (window.confirm("Are you sure you want to reboot?")) {
+    onMessageSendEvent("reboot");
+  }
+}
+
+function onEnableToggleSetting(identifier) {
+  console.log("Got on state for", identifier);
+  onMessageSendEvent(identifier + (identifier === "mic" ? " unmute" : " on"));
+}
+
+function onDisableToggleSetting(identifier) {
+  console.log("Got off state for", identifier);
+  onMessageSendEvent(identifier + (identifier === "mic" ? " mute" : " off"));
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function onUpdateSliderSettings() {
+  console.log("got update event");
+
+  let volumeSlider = document.getElementById("volumeSlider");
+  let speedSlider = document.getElementById("speedSlider");
+  onMessageSendEvent("vol " + volumeSlider.value);
+  await sleep(1000);
+  onMessageSendEvent("speed " + speedSlider.value);
+}
 
 class Slider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: null
+      value: undefined
     };
   }
   render() {
@@ -73,14 +109,32 @@ class Slider extends React.Component {
 }
 
 class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checked: props.checked
+    };
+  }
   render() {
     return (
       <div id={this.props.divId}>
         <p>{this.props.name}</p>
-        <label className="switch">
-          <input type="checkbox" id="{props.inputId}" checked={this.props.checked} />
+        <button
+          className="btn onButton"
+          onClick={() => onEnableToggleSetting(this.props.identifier)}
+        >
+          On
+        </button>
+        <button
+          className="btn offButton"
+          onClick={() => onDisableToggleSetting(this.props.identifier)}
+        >
+          Off
+        </button>
+        {/*<label className="switch">
+          <input type="checkbox" id={this.props.inputId} />
           <span className="slider_round" />
-        </label>
+        </label>*/}
       </div>
     );
   }
@@ -104,29 +158,41 @@ class ButtonPanel extends React.Component {
           min={this.vol.min}
           max={this.vol.max}
           step={this.vol.step}
+          inputId="volumeSlider"
         />
         <Slider
           name="Speed"
           min={this.speed.min}
           max={this.speed.max}
           step={this.speed.step}
+          inputId="speedSlider"
         />
         <Toggle
           divId="tableMode"
           name="Table Mode"
           inputId="tableButton"
+          identifier="table"
           checked={settings.checkboxes.table.checked}
         />
         <Toggle
           divId="micEnable"
           name="Microphone"
           inputId="micButton"
+          identifier="mic"
           checked={settings.checkboxes.mic.checked}
         />
-        <button onclick="{/* update */}" id="updateButton">
+        <button
+          className="btn"
+          onClick={() => onUpdateSliderSettings()}
+          id="updateButton"
+        >
           Update
         </button>
-        <button onclick="{/* reboot */}" id="rebootButton">
+        <button
+          className="btn"
+          onClick={() => onRebootRequest()}
+          id="rebootButton"
+        >
           Reboot
         </button>
       </div>
