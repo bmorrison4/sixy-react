@@ -11,21 +11,35 @@ import "./index.css";
 const settings = {
   chat: {
     domain: "https://www.letsrobot.tv/chat/",
-    channel: "skeeter_mcbee"
+    channel: "jill"
   },
   sliders: {
     volume: {
       min: "0",
       max: "100",
       step: "5",
-      value: "50",
+      value: "80"
     },
     speed: {
       min: "-1.0",
       max: "1.0",
       step: "0.1",
-      value: "1.0",
+      value: "1.0"
     }
+  },
+  checkboxes: {
+    table: {
+      checked: "false"
+    },
+    mic: {
+      checked: "true"
+    }
+  },
+  socket: {
+    server: "wss://letsrobot.tv",
+    port: "8000",
+    robotName: "sixy",
+    robotID: "80459902",
   }
 };
 
@@ -38,7 +52,7 @@ class Slider extends React.Component {
     super(props);
     this.state = {
       value: null
-    }
+    };
   }
   render() {
     return (
@@ -58,16 +72,18 @@ class Slider extends React.Component {
   }
 }
 
-function Toggle(props) {
-  return (
-    <div id={props.divId}>
-      <p>{props.name}</p>
-      <label className="switch">
-        <input type="checkbox" id="{props.inputId}" />
-        <span className="slider_round" />
-      </label>
-    </div>
-  );
+class Toggle extends React.Component {
+  render() {
+    return (
+      <div id={this.props.divId}>
+        <p>{this.props.name}</p>
+        <label className="switch">
+          <input type="checkbox" id="{props.inputId}" checked={this.props.checked} />
+          <span className="slider_round" />
+        </label>
+      </div>
+    );
+  }
 }
 
 class Chatbox extends React.Component {
@@ -83,15 +99,30 @@ class ButtonPanel extends React.Component {
   render() {
     return (
       <div className="ButtonPanel">
-        <Slider 
-        name="Volume" 
-        min={this.vol.min}
-        max={this.vol.max}
-        step={this.vol.step}
+        <Slider
+          name="Volume"
+          min={this.vol.min}
+          max={this.vol.max}
+          step={this.vol.step}
         />
-        <Slider name="Speed" />
-        <Toggle divId="tableMode" name="Table Mode" inputId="tableButton" />
-        <Toggle divId="micEnable" name="Microphone" inputId="micButton" />
+        <Slider
+          name="Speed"
+          min={this.speed.min}
+          max={this.speed.max}
+          step={this.speed.step}
+        />
+        <Toggle
+          divId="tableMode"
+          name="Table Mode"
+          inputId="tableButton"
+          checked={settings.checkboxes.table.checked}
+        />
+        <Toggle
+          divId="micEnable"
+          name="Microphone"
+          inputId="micButton"
+          checked={settings.checkboxes.mic.checked}
+        />
         <button onclick="{/* update */}" id="updateButton">
           Update
         </button>
