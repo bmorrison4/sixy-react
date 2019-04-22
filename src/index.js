@@ -3,41 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import io from "socket.io-client";
 
-const settings = {
-  chat: {
-    domain: "https://www.letsrobot.tv/chat/",
-    channel: "jill"
-  },
-  sliders: {
-    volume: {
-      min: "0",
-      max: "100",
-      step: "5",
-      value: "80"
-    },
-    speed: {
-      min: "-1.0",
-      max: "1.0",
-      step: "0.1",
-      value: "1.0"
-    }
-  },
-  // I don't think I actually need this section anymore.
-  checkboxes: {
-    table: {
-      checked: "false"
-    },
-    mic: {
-      checked: "true"
-    }
-  },
-  socket: {
-    server: "wss://letsrobot.tv",
-    port: "8000",
-    robotName: "sixy",
-    robotID: "80459902"
-  }
-};
+let settings = require('./settings.json');
 
 const socket = io.connect(settings.socket.server + ":" + settings.socket.port);
 
@@ -87,7 +53,7 @@ class Slider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: undefined
+      value: this.props.value
     };
   }
   render() {
@@ -159,6 +125,7 @@ class ButtonPanel extends React.Component {
           max={this.vol.max}
           step={this.vol.step}
           inputId="volumeSlider"
+          value={this.vol.value}
         />
         <Slider
           name="Speed"
@@ -166,20 +133,19 @@ class ButtonPanel extends React.Component {
           max={this.speed.max}
           step={this.speed.step}
           inputId="speedSlider"
+          value={this.speed.value}
         />
         <Toggle
           divId="tableMode"
           name="Table Mode"
           inputId="tableButton"
           identifier="table"
-          checked={settings.checkboxes.table.checked}
         />
         <Toggle
           divId="micEnable"
           name="Microphone"
           inputId="micButton"
           identifier="mic"
-          checked={settings.checkboxes.mic.checked}
         />
         <button
           className="btn"

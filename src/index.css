@@ -29,7 +29,7 @@ iframe {
   color: white;
   border: 0px;
   /* height: 24px; */
-  font-size: calc(6px + 2vmin);
+  font-size: 1em;
   padding: 5px 10px 5px 10px;
   background: -webkit-linear-gradient(-45deg, #954ed6 0%, #009bee 100%);
   margin-top: 10px;
@@ -48,21 +48,15 @@ iframe {
   transform: translateY(4px);
 }
 
-.onButton, .offButton {
-    border-radius: 10px;
-    color: white;
-    border: 0px;
-    font-size: calc(6px + 2vmin);
-    padding: 5px 10px 5px 10px;
-    background: -webkit-linear-gradient(-45deg, #954ed6 0%, #009bee);
-    margin-top: 10px;
-    margin-left: 10px;
-    width: 45px;
+.onButton,
+.offButton {
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 45px;
 }
 
-
 #updateButton {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 table {
@@ -267,7 +261,6 @@ input:checked + .slider_round:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
 
 #rebootButton {
   position: absolute;

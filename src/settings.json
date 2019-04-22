@@ -1,20 +1,26 @@
-[
-  {
-    "settings": [
-      {
-        "chat": [
-          {
-            "domain": "https://www.letsrobot.tv/chat/",
-            "channel": "skeeter_mcbee"
-          }
-        ],
-        "socket": [
-          {
-            "server": "wss://letsrobot.tv",
-            "port": "8000"
-          }
-        ]
-      }
-    ]
+{
+  "chat": {
+    "domain": "https://letsrobot.tv/chat/",
+    "channel": "jill"
+  },
+  "sliders": {
+    "volume": {
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "value": 80
+    },
+    "speed": {
+      "min": -1.0,
+      "max": 1.0,
+      "step": 0.1,
+      "value": 1.0
+    }
+  },
+  "socket": {
+    "server": "wss://letsrobot.tv",
+    "port": 8000,
+    "robotName": "sixy",
+    "robotID": 80459902
   }
-]
+}
