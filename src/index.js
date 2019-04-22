@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import io from "socket.io-client";
+import fs from "fs";
 
 let settings = require('./settings.json');
 
@@ -14,7 +15,7 @@ function onMessageSendEvent(message) {
     robot_name: settings.socket.robotName,
     robot_id: settings.socket.robotID,
     room: settings.chat.channel,
-    secret: "iknowyourelookingatthisthatsfine"
+    secret: settings.socket.secret
   });
 }
 
@@ -47,6 +48,16 @@ async function onUpdateSliderSettings() {
   onMessageSendEvent("vol " + volumeSlider.value);
   await sleep(1000);
   onMessageSendEvent("speed " + speedSlider.value);
+
+  settings.sliders.volume.value = volumeSlider;
+  settings.sliders.speed.value = speedSlider;
+  fs.writeFile("./settings.json", JSON.stringify(settings), (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    };
+    console.log("File has been created");
+  })
 }
 
 class Slider extends React.Component {
@@ -65,7 +76,7 @@ class Slider extends React.Component {
           className="slider"
           min={this.props.min}
           max={this.props.max}
-          value={this.state.value}
+          defaultValue={this.state.value}
           step={this.props.step}
           id={this.props.inputId}
         />
@@ -97,10 +108,6 @@ class Toggle extends React.Component {
         >
           Off
         </button>
-        {/*<label className="switch">
-          <input type="checkbox" id={this.props.inputId} />
-          <span className="slider_round" />
-        </label>*/}
       </div>
     );
   }

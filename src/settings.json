@@ -21,6 +21,7 @@
     "server": "wss://letsrobot.tv",
     "port": 8000,
     "robotName": "sixy",
-    "robotID": 80459902
+    "robotID": 80459902,
+    "secret": "iknowyourelookingatthisthatsfine"
   }
 }
