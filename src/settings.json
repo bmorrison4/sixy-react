@@ -1,0 +1,20 @@
+[
+  {
+    "settings": [
+      {
+        "chat": [
+          {
+            "domain": "https://www.letsrobot.tv/chat/",
+            "channel": "skeeter_mcbee"
+          }
+        ],
+        "socket": [
+          {
+            "server": "wss://letsrobot.tv",
+            "port": "8000"
+          }
+        ]
+      }
+    ]
+  }
+]
