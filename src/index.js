@@ -12,6 +12,20 @@ const settings = {
   chat: {
     domain: "https://www.letsrobot.tv/chat/",
     channel: "skeeter_mcbee"
+  },
+  sliders: {
+    volume: {
+      min: "0",
+      max: "100",
+      step: "5",
+      value: "50",
+    },
+    speed: {
+      min: "-1.0",
+      max: "1.0",
+      step: "0.1",
+      value: "1.0",
+    }
   }
 };
 
@@ -19,21 +33,29 @@ const settings = {
 //settings.settings[0].socket[0].server + ":" + settings.settings[0].socket[0].port
 //);
 
-function Slider(props) {
-  return (
-    <div className="slidecontainer">
-      <p>{props.name}</p>
-      <input
-        type="range"
-        className="slider"
-        min={props.min}
-        max={props.max}
-        value={props.value}
-        step={props.step}
-        id={props.inputId}
-      />
-    </div>
-  );
+class Slider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null
+    }
+  }
+  render() {
+    return (
+      <div className="slidecontainer">
+        <p>{this.props.name}</p>
+        <input
+          type="range"
+          className="slider"
+          min={this.props.min}
+          max={this.props.max}
+          value={this.state.value}
+          step={this.props.step}
+          id={this.props.inputId}
+        />
+      </div>
+    );
+  }
 }
 
 function Toggle(props) {
@@ -41,7 +63,7 @@ function Toggle(props) {
     <div id={props.divId}>
       <p>{props.name}</p>
       <label className="switch">
-        <input type="checkbox" id="{inputId}" />
+        <input type="checkbox" id="{props.inputId}" />
         <span className="slider_round" />
       </label>
     </div>
@@ -56,25 +78,18 @@ class Chatbox extends React.Component {
 }
 
 class ButtonPanel extends React.Component {
+  vol = settings.sliders.volume;
+  speed = settings.sliders.speed;
   render() {
     return (
       <div className="ButtonPanel">
-        <Slider
-          min="0"
-          max="100"
-          value={this.props.value}
-          step="5"
-          inputId="volumeSlider"
-          name="Volume"
+        <Slider 
+        name="Volume" 
+        min={this.vol.min}
+        max={this.vol.max}
+        step={this.vol.step}
         />
-        <Slider
-          min="-1.0"
-          max="1.0"
-          value="1"
-          step="0.1"
-          inputId="speedSlider"
-          name="Speed"
-        />
+        <Slider name="Speed" />
         <Toggle divId="tableMode" name="Table Mode" inputId="tableButton" />
         <Toggle divId="micEnable" name="Microphone" inputId="micButton" />
         <button onclick="{/* update */}" id="updateButton">
