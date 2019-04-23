@@ -7,16 +7,11 @@ export default class ButtonPanel extends Component {
   render() {
     return (
       <div className="button-panel" width="180">
-        <Slider />
-        <Slider />
-        <Toggle />
-        <Toggle />
-        <button className="btn updateBtn">
-          update
-        </button>
-        <button className="btn rebootBtn">
-          reboot
-        </button>
+        <Slider min="0" max="100" name="Volume" value="80" step="5" />
+        <Slider min="-1.0" max="1.0" name="Speed" value="1.0" step="0.1" />
+        <Toggle name="Table" />
+        <Toggle name="Mic" />
+        <button className="btn reboot-btn">reboot</button>
       </div>
     );
   }
