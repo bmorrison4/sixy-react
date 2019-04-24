@@ -14,5 +14,6 @@ const sendMessage = message => {
 };
 
 module.exports = {
-  sendMessage
+  sendMessage,
+  socket
 };
