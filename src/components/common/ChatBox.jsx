@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-/*<iframe src={ this.src } title="chat" />;*/
-
 class ChatBox extends Component {
   constructor(props) {
     super(props);
