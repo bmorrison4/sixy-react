@@ -306,3 +306,11 @@ li {
 .messages-container {
   overflow: auto;
 }
+
+.latest-activity-content li{
+  padding: 0;
+  padding-left: 5px;
+  margin: 0;
+  font-size: 0.85em;
+  color: #999;
+}

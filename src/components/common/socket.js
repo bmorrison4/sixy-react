@@ -1,10 +1,11 @@
 const io = require("socket.io-client");
 
-const socket = io.connect("wss://letsrobot.tv:8000");
+const chatSocket = io.connect("wss://letsrobot.tv:8000");
+const controlSocket = io.connect("wss://letsrobot.tv:3536");
 
 const sendMessage = message => {
   // console.log("Trying to send message", message);
-  socket.emit("chat_message", {
+  chatSocket.emit("chat_message", {
     message: "[sixy] ." + message,
     robot_name: "sixy",
     robot_id: "80459902",
@@ -15,5 +16,6 @@ const sendMessage = message => {
 
 module.exports = {
   sendMessage,
-  socket
+  chatSocket,
+  controlSocket
 };

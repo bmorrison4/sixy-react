@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 //import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import Messages from "./messages";
+import LatestActivity from "./LatestActivity";
 
 class ChatBox extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class ChatBox extends Component {
     //const { dropdownChecked } = this.state;
     return (
       <div className="chatBox">
+        <LatestActivity />
         <Messages />
       </div>
     );

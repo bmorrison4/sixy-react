@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { socket } from "./socket";
+import { chatSocket } from "./socket";
 
 export default class Messages extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class Messages extends Component {
 
   componentDidMount() {
     this.scrollDown();
-    socket.on("chat_message_with_name", this.onMessage);
+    chatSocket.on("chat_message_with_name", this.onMessage);
   }
 
   componentDidUpdate(prevProps, prevState) {
