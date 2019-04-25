@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+//import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import Messages from "./messages";
 
 class ChatBox extends Component {
   constructor(props) {
@@ -11,14 +12,9 @@ class ChatBox extends Component {
   }
 
   updateDropdown = () => {
-    console.log("Changing state", this.state.dropdownChecked);
-    this.setState({ dropdownChecked: !this.state.dropdownChecked });
-  };
-
-  render() {
-    const { dropdownChecked } = this.state;
-    return (
-      <div className="chatBox">
+    // console.log("Changing state", this.state.dropdownChecked);
+    //this.setState({ dropdownChecked: !this.state.dropdownChecked });
+    /*
         <div className="latest-activity" checked={dropdownChecked}>
           <div className="title">
             <span className="chat-header">Latest Activity</span>
@@ -30,26 +26,15 @@ class ChatBox extends Component {
             {dropdownChecked ? <FaAngleDown /> : <FaAngleUp />}
           </i>
         </div>
-        <ul id="message-list" className="chatBox-message-list">
-          <li>
-            <p className="message-header">skeeter_mcbee [sixy]</p>
-            <span className="message-content">This is a message</span>
-          </li>
-          <li>
-            <p className="message-header">jill [sixy]</p>
-            <span className="message-content">indeed it is : ]</span>
-          </li>
-          <li>
-            <p className="message-header">Gedyy [sixy]</p>
-            <span className="message-content">
-              i dinny ken wit yer talkin about
-            </span>
-          </li>
-          <li>
-            <p className="message-header">Admanta [sixy]</p>
-            <span className="message-content">I want beer</span>
-          </li>
-        </ul>
+
+    */
+  };
+
+  render() {
+    //const { dropdownChecked } = this.state;
+    return (
+      <div className="chatBox">
+        <Messages />
       </div>
     );
   }

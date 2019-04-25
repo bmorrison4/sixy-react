@@ -237,6 +237,8 @@ input:checked + .slider_round:before {
   height: 800px;
   text-align: left;
   border-left: 1px solid #555;
+  overflow: auto;
+  
 }
 
 .latest-activity {
@@ -299,4 +301,8 @@ li {
 
 .message-content {
   padding-left: 10px;
+}
+
+.messages-container {
+  overflow: auto;
 }

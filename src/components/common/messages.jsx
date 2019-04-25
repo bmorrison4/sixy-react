@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import socket from "./socket";
+import { socket } from "./socket";
 
 export default class Messages extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      messages: []
+    };
 
     this.scrollDown = this.scrollDown.bind(this);
   }
@@ -15,7 +19,7 @@ export default class Messages extends Component {
 
   componentDidMount() {
     this.scrollDown();
-    socket.on('chat_message_with_name', this.onMessage);
+    socket.on("chat_message_with_name", this.onMessage);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -23,26 +27,39 @@ export default class Messages extends Component {
   }
 
   onMessage = data => {
-    console.log(data);
-  }
+    if (data.room === "jill") {
+      // console.log(data);
+
+      this.setState(messages => {
+        const _messages = this.state.messages.push(data);
+        if (_messages.length > 10) {
+          _messages.shift();
+        }
+        return _messages;
+      });
+    }
+  };
 
   render() {
-    const { messages, user } = this.props;
+    const { messages } = this.state;
     return (
-      <div className="messages-container">
-        <div className="thread">
-          {messages.map(mes => {
-            return (
-              <div
-                key={mes.id}
-                className={`message=container ${mes.sender === user.name}`}
-              >
-                <p>{mes.sender}</p>
-                <span>{mes.message}</span>
-              </div>
-            );
-          })}
-        </div>
+      <div className="messages-container" ref='container'>
+        <ul id="message-list" className="chatBox-message-list">
+
+          {
+            messages.map((mes) => {
+              let fields = mes.message.split('] ');
+              let robotName = fields[0];
+              let message = fields[1];
+              return (
+                <li key={mes._id}>
+                  <p className="message-header">{`${ mes.name } ${ robotName }]`}</p>
+                  <span className="message-content">{ message }</span>
+                </li>
+              )
+            })
+          }
+        </ul>
       </div>
     );
   }
