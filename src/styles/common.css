@@ -288,6 +288,7 @@ li {
 
 .messages-container {
   overflow: auto;
+  max-height: 770px;
 }
 
 .latest-activity-content li{

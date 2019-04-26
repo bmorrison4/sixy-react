@@ -42,25 +42,27 @@ export default class Messages extends Component {
     const { messages } = this.state;
     return (
       <div className="messages-container" ref="container">
-        <ul id="message-list" className="chatBox-message-list">
+        <ul
+          id="message-list"
+          className="chatBox-message-list"
+          ref={el => {
+            this.messagesEnd = el;
+          }}
+        >
           {messages.map(mes => {
             let fields = mes.message.split("] ");
             let robotName = fields[0];
             let message = fields[1];
             return (
               <li key={mes._id}>
-                <p className="message-header">{`${mes.name} ${robotName}]`}</p>
+                <p className="message-header">{`${
+                  mes.name
+                } ${robotName}]`}</p>
                 <p className="message-content">{message}</p>
               </li>
             );
           })}
         </ul>
-        <div
-          style={{ float: "left", clear: "both" }}
-          ref={el => {
-            this.messagesEnd = el;
-          }}
-        />
       </div>
     );
   }
