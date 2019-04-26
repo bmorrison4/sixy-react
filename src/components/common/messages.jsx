@@ -8,19 +8,27 @@ export default class Messages extends Component {
     this.state = {
       messages: []
     };
-
   }
 
-  scrollToBottom() {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async scrollToBottom() {
+    console.log("before delay", this.ul);
+    this.delay(100);
+    console.log("after deylay", this.ul);
+    this.ul.scrollTop = this.ul.scrollHeight;
   }
 
   componentDidMount() {
+    console.log("in mount", this.ul);
     this.scrollToBottom();
     chatSocket.on("chat_message_with_name", this.onMessage);
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log("in update", this.ul);
     this.scrollToBottom();
   }
 
@@ -30,9 +38,6 @@ export default class Messages extends Component {
 
       this.setState(messages => {
         const _messages = this.state.messages.push(data);
-        if (_messages.length > 10) {
-          _messages.shift();
-        }
         return _messages;
       });
     }
@@ -46,7 +51,7 @@ export default class Messages extends Component {
           id="message-list"
           className="chatBox-message-list"
           ref={el => {
-            this.messagesEnd = el;
+            this.ul = el;
           }}
         >
           {messages.map(mes => {
@@ -55,9 +60,7 @@ export default class Messages extends Component {
             let message = fields[1];
             return (
               <li key={mes._id}>
-                <p className="message-header">{`${
-                  mes.name
-                } ${robotName}]`}</p>
+                <p className="message-header">{`${mes.name} ${robotName}]`}</p>
                 <p className="message-content">{message}</p>
               </li>
             );
