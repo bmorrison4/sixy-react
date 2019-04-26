@@ -9,21 +9,19 @@ export default class Messages extends Component {
       messages: []
     };
 
-    this.scrollDown = this.scrollDown.bind(this);
   }
 
-  scrollDown() {
-    const { container } = this.refs;
-    container.scrollTop = container.scrollHeight;
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
   }
 
   componentDidMount() {
-    this.scrollDown();
+    this.scrollToBottom();
     chatSocket.on("chat_message_with_name", this.onMessage);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.scrollDown();
+    this.scrollToBottom();
   }
 
   onMessage = data => {
@@ -43,23 +41,26 @@ export default class Messages extends Component {
   render() {
     const { messages } = this.state;
     return (
-      <div className="messages-container" ref='container'>
+      <div className="messages-container" ref="container">
         <ul id="message-list" className="chatBox-message-list">
-
-          {
-            messages.map((mes) => {
-              let fields = mes.message.split('] ');
-              let robotName = fields[0];
-              let message = fields[1];
-              return (
-                <li key={mes._id}>
-                  <p className="message-header">{`${ mes.name } ${ robotName }]`}</p>
-                  <span className="message-content">{ message }</span>
-                </li>
-              )
-            })
-          }
+          {messages.map(mes => {
+            let fields = mes.message.split("] ");
+            let robotName = fields[0];
+            let message = fields[1];
+            return (
+              <li key={mes._id}>
+                <p className="message-header">{`${mes.name} ${robotName}]`}</p>
+                <p className="message-content">{message}</p>
+              </li>
+            );
+          })}
         </ul>
+        <div
+          style={{ float: "left", clear: "both" }}
+          ref={el => {
+            this.messagesEnd = el;
+          }}
+        />
       </div>
     );
   }

@@ -236,12 +236,11 @@ input:checked + .slider_round:before {
   width: 359px;
   height: 800px;
   text-align: left;
-  border-left: 1px solid #555;
-  overflow: auto;
-  
+  border-left: 1px solid #555;  
 }
 
 .latest-activity {
+  height: 30px;
 }
 
 .latest-activity:checked {
@@ -249,26 +248,7 @@ input:checked + .slider_round:before {
   -ms-transform: translateX(37px);
   transform: translateX(37px);
   margin-top: 0;
-}
-
-.title {
-
-}
-
-.chat-header {
-
-}
-
-.latest-activity-messages {
-
-}
-
-.chatBox-chat {
-
-}
-
-.chatBox-message-list {
-
+  height: 30px;
 }
 
 .latest-activity-dropper {
@@ -300,7 +280,10 @@ li {
 }
 
 .message-content {
+  margin: 0;
   padding-left: 10px;
+  width: auto;
+  text-align: left;
 }
 
 .messages-container {
@@ -313,4 +296,6 @@ li {
   margin: 0;
   font-size: 0.85em;
   color: #999;
+  overflow: none;
+  max-height: 200px;
 }
