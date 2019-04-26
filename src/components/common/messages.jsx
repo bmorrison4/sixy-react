@@ -10,26 +10,32 @@ export default class Messages extends Component {
     };
   }
 
-  delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  async scrollToBottom() {
-    console.log("before delay", this.ul);
-    this.delay(100);
-    console.log("after deylay", this.ul);
+  scrollToBottom() {
     this.ul.scrollTop = this.ul.scrollHeight;
   }
 
   componentDidMount() {
-    console.log("in mount", this.ul);
     this.scrollToBottom();
     chatSocket.on("chat_message_with_name", this.onMessage);
+    chatSocket.on("user_blocked", this.onBlockedUser);
+    chatSocket.on("user_timeout", this.onUserTimeout);
+    chatSocket.on("message_removed", this.onMessageRemoved);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("in update", this.ul);
     this.scrollToBottom();
+  }
+
+  onBlockedUser = data => {
+    console.log("user blocked", data)
+  }
+
+  onUserTimeout = data => {
+    console.log("user timed out", data)
+  }
+
+  onMessageRemoved = data => {
+    console.log("message removed", data);
   }
 
   onMessage = data => {

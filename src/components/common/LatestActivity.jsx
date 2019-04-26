@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+// import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { controlSocket } from "./socket";
 
 export default class LatestActivity extends Component {
@@ -45,11 +45,11 @@ export default class LatestActivity extends Component {
               )}
           </ul>
         </div>
-        <div className="latest-activity-dropper">
+       {/* <div className="latest-activity-dropper">
           <i className="dropdown-arrow">
             {dropDown ? <FaAngleDown /> : <FaAngleUp />}
           </i>
-        </div>
+        </div> */}
       </div>
     );
   }
