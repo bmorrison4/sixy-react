@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { sendMessage } from './socket'
 
 /**
- * 
+ * Component that renders the toggle switches
  */
 export default class Toggle extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class Toggle extends Component {
   }
 
   /**
-   * 
+   * Triggered when the button is pressed
    */
   onButtonOn = () => {
     const name = this.props.name.toLowerCase();
@@ -20,7 +20,7 @@ export default class Toggle extends Component {
   };
 
   /**
-   * 
+   * Triggered when the button is released
    */
   onButtonOff = () => {
     const name = this.props.name.toLowerCase();
@@ -28,7 +28,8 @@ export default class Toggle extends Component {
   };
 
   /**
-   * 
+   * Render the toggle buttons
+   * @returns Toggle buttons
    */
   render() {
     const { name } = this.props;

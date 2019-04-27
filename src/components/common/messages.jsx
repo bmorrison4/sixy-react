@@ -26,13 +26,15 @@ export default class Messages extends Component {
   componentDidMount() {
     this.scrollToBottom();
     chatSocket.on("chat_message_with_name", this.onMessage);
-    chatSocket.on("user_blocked", this.onBlockedUser);
-    chatSocket.on("user_timeout", this.onUserTimeout);
+    chatSocket.on("user_blocked", this.onMessageRemovedByName);
+    chatSocket.on("user_timeout", this.onMessageRemovedByName);
     chatSocket.on("message_removed", this.onMessageRemoved);
+    chatSocket.on("require_login", this.onRequireLogin);
+    chatSocket.on("system_message", this.onSystemMessage);
   }
 
   /**
-   * Runs every time the ocmponent updates
+   * Runs every time the component updates
    * @param {*} prevProps
    * @param {*} prevState
    */
@@ -49,18 +51,53 @@ export default class Messages extends Component {
   };
 
   /**
+   *
+   *  {
+   *   "username": "zShot",
+   *   "room": "TGCFabian"
+   *  }
    *  Triggered when socket gets a "user_timed_out" event
    *  @param {*} data socket data
    */
   onUserTimeout = data => {
-    console.log("user_timed_out", data);
+    // console.log("user_timed_out", data);
+    const userTimedOut = {
+      _id: "2",
+      name: "LetsBot",
+      message: "[timeout] " + data.username + " has been timed out",
+      room: data.room
+    };
+    this.onMessage(userTimedOut);
   };
   /**
+   *
+   * {
+   *  message_id: "5cc3e7d17940f3413caa2ec1"
+   * }
+   *
    * Triggered when socket gets a "message_removed" event
    * @param {*} data socket data
    */
   onMessageRemoved = data => {
-    console.log("message_removed", data);
+    console.log("Message removed", data);
+    let _messages = this.state.messages;
+    _messages = _messages.filter(message => {
+      return message._id !== data.message_id;
+    });
+
+    if (_messages !== this.state.messages)
+      this.setState({ messages: _messages });
+  };
+
+  onMessageRemovedByName = data => {
+    let _messages = this.state.messages;
+    _messages = _messages.filter(message => {
+      return message.name !== data.name;
+    });
+
+    if (_messages !== this.state.message) {
+      this.setState({ messages: _messages });
+    }
   };
 
   /**
@@ -76,6 +113,51 @@ export default class Messages extends Component {
         return _messages;
       });
     }
+  };
+
+  /**
+   * require_login event only sends an empty object. We have to make our own
+   * with this function.
+   *
+   * If this function is called multiple times, a warning will appear in the
+   * console because there will be multiple messages with the same key.
+   */
+  onRequireLogin = data => {
+    // console.log("Login required.", data);
+    const loginReqd = {
+      _id: "0",
+      name: "Error",
+      message: "[require_login] Login Required",
+      room: "jill"
+    };
+
+    this.onMessage(loginReqd);
+  };
+
+  /**
+   *   {
+   *     room: "jill",
+   *     message: "there must 1 second between your chat messages",
+   *     name: "LetsBot",
+   *     username_color: "#FF0000"
+   *   }
+   *
+   * system_message event doesn't send the robot name in square brackets, which
+   * our onMessage function doesn't like, so we made a new object and gave it an
+   * ID too.
+   *
+   * If this function is called multiple times, a warning will apear in the
+   * console because there will be multiple messages with the same key.
+   */
+  onSystemMessage = data => {
+    const systemMessage = {
+      _id: "1",
+      name: data.name,
+      message: "[sixy] " + data.message,
+      room: data.room
+    };
+
+    this.onMessage(systemMessage);
   };
 
   /**
