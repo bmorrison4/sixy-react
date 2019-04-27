@@ -31,10 +31,13 @@ export default class LatestActivity extends Component {
    * @param {*} data the latest message
    */
   onMessage = data => {
-    this.setState(messages => {
-      const _messages = this.state.messages.push(data);
-      return _messages;
-    });
+    let _messages = this.state.messages;
+    _messages.push(data);
+    if (_messages.length > 7) {
+      _messages = _messages.splice(1);
+    }
+
+    this.setState({ messages: _messages });
   };
 
   /**
