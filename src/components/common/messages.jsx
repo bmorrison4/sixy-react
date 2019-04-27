@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { chatSocket } from "./socket";
 
+/**
+ * Component that handles chat messages
+ */
 export default class Messages extends Component {
   constructor(props) {
     super(props);
@@ -10,10 +13,16 @@ export default class Messages extends Component {
     };
   }
 
+  /**
+   * Tells the browser to scroll to the bottom of the chat div
+   */
   scrollToBottom() {
     this.ul.scrollTop = this.ul.scrollHeight;
   }
 
+  /**
+   * Runs every time the component mounts
+   */
   componentDidMount() {
     this.scrollToBottom();
     chatSocket.on("chat_message_with_name", this.onMessage);
@@ -22,22 +31,42 @@ export default class Messages extends Component {
     chatSocket.on("message_removed", this.onMessageRemoved);
   }
 
+  /**
+   * Runs every time the ocmponent updates
+   * @param {*} prevProps
+   * @param {*} prevState
+   */
   componentDidUpdate(prevProps, prevState) {
     this.scrollToBottom();
   }
 
+  /**
+   * Triggered when socket gets a "user_blocked" event
+   * @param {*} data socket data
+   */
   onBlockedUser = data => {
-    console.log("user blocked", data)
-  }
+    console.log("user_blocked", data);
+  };
 
+  /**
+   *  Triggered when socket gets a "user_timed_out" event
+   *  @param {*} data socket data
+   */
   onUserTimeout = data => {
-    console.log("user timed out", data)
-  }
-
+    console.log("user_timed_out", data);
+  };
+  /**
+   * Triggered when socket gets a "message_removed" event
+   * @param {*} data socket data
+   */
   onMessageRemoved = data => {
-    console.log("message removed", data);
-  }
+    console.log("message_removed", data);
+  };
 
+  /**
+   * Update the state when a message is recieved
+   * @param {*} data the message object
+   */
   onMessage = data => {
     if (data.room === "jill") {
       // console.log(data);
@@ -49,6 +78,9 @@ export default class Messages extends Component {
     }
   };
 
+  /**
+   * Render the messages in a list
+   */
   render() {
     const { messages } = this.state;
     return (

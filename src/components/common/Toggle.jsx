@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { sendMessage } from './socket'
 
+/**
+ * 
+ */
 export default class Toggle extends Component {
   constructor(props) {
     super(props);
@@ -8,16 +11,25 @@ export default class Toggle extends Component {
     this.state = {};
   }
 
+  /**
+   * 
+   */
   onButtonOn = () => {
     const name = this.props.name.toLowerCase();
     sendMessage(name + " on");    
   };
 
+  /**
+   * 
+   */
   onButtonOff = () => {
     const name = this.props.name.toLowerCase();
     sendMessage(name + " off");
   };
 
+  /**
+   * 
+   */
   render() {
     const { name } = this.props;
     return (

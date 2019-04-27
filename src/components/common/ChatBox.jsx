@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import Messages from "./messages";
 import LatestActivity from "./LatestActivity";
 
-class ChatBox extends Component { 
-
+/**
+ * ChatBox container that renders latest activity and Messages components.
+ */
+export default class ChatBox extends Component {
+  /**
+   * Show the latest activity and messages list.
+   */
   render() {
     return (
       <div className="chatBox">
@@ -13,5 +18,3 @@ class ChatBox extends Component {
     );
   }
 }
-
-export default ChatBox;

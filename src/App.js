@@ -2,7 +2,13 @@ import React, { Component } from "react";
 import Layout from "./components/layout/layout";
 import "./styles/common.css";
 
-class App extends Component {
+/**
+ * 
+ */
+export default class App extends Component {
+  /**
+   * 
+   */
   render() {
     return (
       <div>
@@ -14,4 +20,4 @@ class App extends Component {
   }
 }
 
-export default App;
+

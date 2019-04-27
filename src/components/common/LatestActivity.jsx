@@ -2,6 +2,9 @@ import React, { Component } from "react";
 // import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { controlSocket } from "./socket";
 
+/**
+ * Component that renders the latest control activity
+ */
 export default class LatestActivity extends Component {
   constructor(props) {
     super(props);
@@ -16,10 +19,17 @@ export default class LatestActivity extends Component {
     };
   }
 
+  /**
+   * Runs once when the component first renders
+   */
   componentDidMount() {
     controlSocket.on("robot_command_has_hit_webserver", this.onMessage);
   }
 
+  /**
+   * Update the component state when a new message is added
+   * @param {*} data the latest message
+   */
   onMessage = data => {
     this.setState(messages => {
       const _messages = this.state.messages.push(data);
@@ -27,6 +37,9 @@ export default class LatestActivity extends Component {
     });
   };
 
+  /**
+   * Render the latest activity messages
+   */
   render() {
     const { messages, dropDown } = this.state;
     return (
