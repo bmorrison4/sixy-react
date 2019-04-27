@@ -26,8 +26,6 @@ export default class Messages extends Component {
   componentDidMount() {
     this.scrollToBottom();
     chatSocket.on("chat_message_with_name", this.onMessage);
-    chatSocket.on("user_blocked", this.onMessageRemovedByName);
-    chatSocket.on("user_timeout", this.onMessageRemovedByName);
     chatSocket.on("message_removed", this.onMessageRemoved);
     chatSocket.on("require_login", this.onRequireLogin);
     chatSocket.on("system_message", this.onSystemMessage);
@@ -51,18 +49,16 @@ export default class Messages extends Component {
   };
 
   /**
-   *
    *  {
-   *   "username": "zShot",
-   *   "room": "TGCFabian"
+   *   "username": "skeeter_mcbee",
+   *   "room": "jill"
    *  }
    *  Triggered when socket gets a "user_timed_out" event
    *  @param {*} data socket data
    */
   onUserTimeout = data => {
-    // console.log("user_timed_out", data);
     const userTimedOut = {
-      _id: "2",
+      _id: this.generateRandomNumber(),
       name: "LetsBot",
       message: "[timeout] " + data.username + " has been timed out",
       room: data.room
@@ -106,7 +102,7 @@ export default class Messages extends Component {
    */
   onMessage = data => {
     if (data.room === "jill") {
-      // console.log(data);
+      console.log(data);
 
       this.setState(messages => {
         const _messages = this.state.messages.push(data);
@@ -125,7 +121,7 @@ export default class Messages extends Component {
   onRequireLogin = data => {
     // console.log("Login required.", data);
     const loginReqd = {
-      _id: "0",
+      _id: this.generateRandomNumber(),
       name: "Error",
       message: "[require_login] Login Required",
       room: "jill"
@@ -133,6 +129,10 @@ export default class Messages extends Component {
 
     this.onMessage(loginReqd);
   };
+
+  generateRandomNumber() {
+    return Math.floor(Math.random() * 100000000000);
+  }
 
   /**
    *   {
@@ -151,9 +151,9 @@ export default class Messages extends Component {
    */
   onSystemMessage = data => {
     const systemMessage = {
-      _id: "1",
+      _id: this.generateRandomNumber(),
       name: data.name,
-      message: "[sixy] " + data.message,
+      message: data.message,
       room: data.room
     };
 
@@ -175,12 +175,20 @@ export default class Messages extends Component {
           }}
         >
           {messages.map(mes => {
-            let fields = mes.message.split("] ");
-            let robotName = fields[0];
-            let message = fields[1];
+            let robotName;
+            let message;
+            if (mes.message.includes("] ")) {
+              let fields = mes.message.split("] ");
+              robotName = fields[0] + "]";
+              message = fields[1];
+            } else {
+              robotName = "";
+              message = mes.message;
+            }
+
             return (
               <li key={mes._id}>
-                <p className="message-header">{`${mes.name} ${robotName}]`}</p>
+                <p className="message-header">{`${mes.name} ${robotName}`}</p>
                 <p className="message-content">{message}</p>
               </li>
             );
