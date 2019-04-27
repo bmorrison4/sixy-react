@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "joi-browser": "^13.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-icons": "^3.6.1",
     "react-scripts": "2.1.8",
     "socket.io-client": "^2.2.0"
   },
