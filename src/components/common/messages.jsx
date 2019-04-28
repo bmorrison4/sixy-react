@@ -41,31 +41,6 @@ export default class Messages extends Component {
   }
 
   /**
-   * Triggered when socket gets a "user_blocked" event
-   * @param {*} data socket data
-   */
-  onBlockedUser = data => {
-    console.log("user_blocked", data);
-  };
-
-  /**
-   *  {
-   *   "username": "skeeter_mcbee",
-   *   "room": "jill"
-   *  }
-   *  Triggered when socket gets a "user_timed_out" event
-   *  @param {*} data socket data
-   */
-  onUserTimeout = data => {
-    const userTimedOut = {
-      _id: this.generateRandomNumber(),
-      name: "LetsBot",
-      message: "[timeout] " + data.username + " has been timed out",
-      room: data.room
-    };
-    this.onMessage(userTimedOut);
-  };
-  /**
    *
    * {
    *  message_id: "5cc3e7d17940f3413caa2ec1"
@@ -75,7 +50,6 @@ export default class Messages extends Component {
    * @param {*} data socket data
    */
   onMessageRemoved = data => {
-    console.log("Message removed", data);
     let _messages = this.state.messages;
     _messages = _messages.filter(message => {
       return message._id !== data.message_id;
@@ -83,32 +57,6 @@ export default class Messages extends Component {
 
     if (_messages !== this.state.messages)
       this.setState({ messages: _messages });
-  };
-
-  onMessageRemovedByName = data => {
-    let _messages = this.state.messages;
-    _messages = _messages.filter(message => {
-      return message.name !== data.name;
-    });
-
-    if (_messages !== this.state.message) {
-      this.setState({ messages: _messages });
-    }
-  };
-
-  /**
-   * Update the state when a message is recieved
-   * @param {*} data the message object
-   */
-  onMessage = data => {
-    if (data.room === "jill") {
-      console.log(data);
-
-      this.setState(messages => {
-        const _messages = this.state.messages.push(data);
-        return _messages;
-      });
-    }
   };
 
   /**
@@ -119,7 +67,6 @@ export default class Messages extends Component {
    * console because there will be multiple messages with the same key.
    */
   onRequireLogin = data => {
-    // console.log("Login required.", data);
     const loginReqd = {
       _id: this.generateRandomNumber(),
       name: "Error",
@@ -158,6 +105,19 @@ export default class Messages extends Component {
     };
 
     this.onMessage(systemMessage);
+  };
+
+  /**
+   * Update the state when a message is recieved
+   * @param {*} data the message object
+   */
+  onMessage = data => {
+    if (data.room === "jill") {
+      this.setState(messages => {
+        const _messages = this.state.messages.push(data);
+        return _messages;
+      });
+    }
   };
 
   /**
