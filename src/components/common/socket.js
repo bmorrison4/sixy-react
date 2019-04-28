@@ -1,28 +1,25 @@
-const io = require("socket.io-client");
+import io from "socket.io-client";
+import settings from "../../settings";
 
-const chatSocket = io.connect("wss://letsrobot.tv:8000");
-const controlSocket = io.connect("wss://letsrobot.tv:3536");
+const chatSocketServer =
+  settings.chat_socket.server + ":" + settings.chat_socket.port;
+const controlSocketServer =
+  settings.control_socket.server + ":" + settings.control_socket.port;
+
+export const chatSocket = io.connect(chatSocketServer);
+export const controlSocket = io.connect(controlSocketServer);
 
 /**
  * Send a message to the socket server
  * @param {str} message the message to send
  */
-const sendMessage = message => {
+export const sendMessage = message => {
   // console.log("Trying to send message", message);
   chatSocket.emit("chat_message", {
-    message: "[sixy] ." + message,
-    robot_name: "sixy",
-    robot_id: "80459902",
-    room: "jill",
-    secret: "iknowyourelookingatthisthatsfine"
+    message: "[" + settings.chat_socket.robotName + "] ." + message,
+    robot_name: settings.chat_socket.robotName,
+    robot_id: settings.chat_socket.robotID,
+    room: settings.chat_socket.room,
+    secret: settings.chat_socket.secret
   });
-};
-
-/**
- * export the socket objects and functions
- */
-module.exports = {
-  sendMessage,
-  chatSocket,
-  controlSocket
 };

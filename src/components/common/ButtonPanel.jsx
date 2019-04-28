@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Slider from "./Slider";
 import Toggle from "./Toggle";
 import '../../styles/common.css'
+import settings from '../../settings';
 import { sendMessage } from './socket'
 
 /**
@@ -27,10 +28,22 @@ export default class ButtonPanel extends Component {
   render() {
     return (
       <div className="button-panel" width="180">
-        <Slider min="0" max="100" name="Volume" value="80" step="5" />
-        <Slider min="-1.0" max="1.0" name="Speed" value="1.0" step="0.1" />
-        <Toggle name="Table" />
-        <Toggle name="Mic" />
+        <Slider 
+          min={ settings.sliders.Volume.min } 
+          max={ settings.sliders.Volume.max } 
+          name={ settings.sliders.Volume.name }
+          value={ settings.sliders.Volume.value }
+          step={ settings.sliders.Volume.step }
+        />
+        <Slider 
+          min={ settings.sliders.Speed.min }
+          max={ settings.sliders.Speed.max }
+          name={ settings.sliders.Speed.name }
+          value={ settings.sliders.Speed.value }
+          step={ settings.sliders.Speed.step }
+        />
+        <Toggle name={ settings.toggles.Table.name }/>
+        <Toggle name={ settings.toggles.Mic.name } />
         <button className="btn reboot-btn" onClick={this.reboot}>reboot</button>
       </div>
     );
