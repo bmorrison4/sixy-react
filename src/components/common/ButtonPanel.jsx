@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { FiPower } from "react-icons/fi";
 import Slider from "./Slider";
 import Toggle from "./Toggle";
 import "../../styles/common.css";
@@ -25,7 +26,7 @@ export default class ButtonPanel extends Component {
 
     return (
       <div className="button-panel" width="180">
-        {inputs.map(input => {
+        {inputs.map((input, index) => {
           switch (input.type) {
             case "slider":
               return (
@@ -36,21 +37,22 @@ export default class ButtonPanel extends Component {
                     step={input.step}
                     value={input.value}
                     name={input.name}
+                    key={index}
                   />
                 </>
               );
             case "toggle":
               return (
                 <>
-                  <Toggle name={input.name} />
+                  <Toggle name={input.name} key={index}/>
                 </>
               );
             default:
-              return (<p className="error">Unknown Type: {input.type}</p>);
+              return (<p className="error" key={index}>Unknown Type: {input.type}</p>);
           }
         })}
-        <button className="btn reboot-btn" onClick={this.reboot}>
-          reboot
+        <button className="btn power-btn" onClick={this.reboot}>
+          <FiPower />
         </button>
       </div>
     );

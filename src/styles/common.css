@@ -2,26 +2,22 @@ body {
   padding: 0;
   margin: 0;
   background-color: #282c34;
+  height: 100%;
 }
 
 .content {
   position: relative;
-  width: 480px;
-  height: 800px;
+  /*width: 480px;
+  height: 800px;*/
+  height: 100vh;
 }
 
 .button-panel {
   float: left;
-  width: 120px;
-  height: 800px;
-}
-
-iframe {
-  border: none;
-  float: right;
-  width: 360px;
+  width: 25%;
   height: 100%;
 }
+
 
 .btn {
   border-radius: 10px;
@@ -34,7 +30,7 @@ iframe {
   background: -webkit-linear-gradient(-45deg, #954ed6 0%, #009bee 100%);
   margin-top: 10px;
   margin-left: 10px;
-  width: 100px;
+  width: 100%;
   left: 10px;
 }
 
@@ -51,13 +47,17 @@ iframe {
 .off-btn {
   margin-top: 10px;
   margin-left: 10px;
-  width: 45px;
+  width: calc(45%);
 }
 
-.reboot-btn {
+.power-btn {
   position: absolute;
+  margin: 0;
+  padding: 0;
   bottom: 10px;
-  left: 0px;
+  height: 50px;
+  width: calc(25% - 20px);
+  font-size: 3em;
 }
 
 .slidecontainer {
@@ -189,27 +189,19 @@ p {
 
 .chatBox {
   float: right;
-  width: 359px;
-  height: 800px;
+  width: 75%;
+  height: 100%;
   text-align: left;
   background-color: #242327;
+  box-sizing: border-box;
 }
 
 .latest-activity {
-  height: 30px;
   color: white;
   background-color: rgb(49, 55, 107);
-  height: 150px;
+  height: 18.75%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-}
-
-.latest-activity:checked {
-  -webkit-transform: translateX(37px);
-  -ms-transform: translateX(37px);
-  transform: translateX(37px);
-  margin-top: 0;
-  height: 30px;
 }
 
 .latest-activity-content {
@@ -252,7 +244,7 @@ li {
 
 .chatBox-message-list {
   overflow: auto;
-  max-height: 650px;
+  max-height: 635px;
 }
 
 .error {
