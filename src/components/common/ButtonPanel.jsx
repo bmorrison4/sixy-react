@@ -46,7 +46,7 @@ export default class ButtonPanel extends Component {
                 </>
               );
             default:
-              return `<p>Unknown Type:${input.type}</p>`;
+              return (<p>Unknown Type: {input.type}</p>);
           }
         })}
         <button className="btn reboot-btn" onClick={this.reboot}>
