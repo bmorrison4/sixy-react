@@ -18,11 +18,7 @@ export default class ButtonPanel extends Component {
   };
 
   /**
-   * Renders 2 sliders, 2 toggles, and the reboot button.
-   * Slider 1: Volume, 0-100 @ 5, default 80
-   * Slider 2: Speed, -1-1 @ 0.1 default 1
-   * Toggle 1: Table
-   * Toggle 2: Mic
+   * Renders input buttons from JSON, and a static "reboot" button.
    */
   render() {
     const inputs = settings.inputs;

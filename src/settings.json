@@ -19,7 +19,7 @@
     {
       "name": "Table",
       "type": "toggle"
-    }, 
+    },
     {
       "name": "Mic",
       "type": "toggle"
