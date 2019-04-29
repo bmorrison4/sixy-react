@@ -254,3 +254,7 @@ li {
   overflow: auto;
   max-height: 650px;
 }
+
+.error {
+  color: red;
+}
