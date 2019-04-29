@@ -38,3 +38,4 @@ The `Latest Activity` window uses this socket to show movement events. You will 
 1. Add more button types
 2. Ability to chat from the robot
 3. Latest Activity Dropdown
+4. resizability. Right now it's specifically sized for the screen on Sixy. 
